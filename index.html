@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Exemple</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="barre-navigation">
+    <div class="logo">MonSite</div>
+    <div class="menu-navigation">
+      <a class="actif" href="#">Accueil</a>
+
+      <a href="apropos.php">À propos</a>
+      <a href="login.php" class="btn-menu">Connexion</a>
+      <a href="register.php" class="btn-menu">Inscription</a>
+      
+    </div>
+  </header>
+
+  <section class="banniere-principale">
+    <div class="overlay-banniere">
+      <img class="image-principale" src="worldmap.png" alt="Carte du monde">
+      <h2>Le monde à votre portée</h2>
+      <button class="btn-principal">Découvrir</button>
+    </div>
+  </section>
+
+  <main class="contenu-principal">
+    <section class="tuiles">
+      <h3>Nos Services</h3>
+      <hr>
+      <div class="grille-tuiles" id="grille-tuiles">
+        
+      </div>
+    </section>
+  </main>
+
+  <script src="tuiles.js"></script>
+</body>
+</html>

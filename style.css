@@ -1,0 +1,143 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f2f2f2;
+}
+
+
+.barre-navigation {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-bottom: 2px solid #ddd;
+}
+
+.logo {
+  font-size: 28px;
+}
+
+.menu-navigation {
+  display: flex;
+  gap: 25px;
+}
+
+.menu-navigation a {
+  text-decoration: none;
+  color: black;
+  padding: 8px 20px;
+  border-radius: 3px;
+  transition: 0.2s;
+}
+
+.menu-navigation a.actif {
+  background: black;
+  color: white;
+}
+
+
+.banniere-principale {
+  height: 350px;
+  background: url("worldmap.jpg") center/cover no-repeat;
+  position: relative;
+}
+
+.overlay-banniere {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+}
+
+.image-principale {
+  width: 300px;
+  opacity: 0.9;
+}
+
+.overlay-banniere h2 {
+  color: white;
+  font-size: 22px;
+  background: rgba(255,255,255,0.4);
+  padding: 8px 18px;
+  border-radius: 5px;
+}
+
+.btn-principal {
+  background: #4a4a18;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-principal:hover {
+  opacity: 0.85;
+}
+
+
+.tuiles {
+  padding: 30px 50px;
+}
+
+.tuiles h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.tuiles hr {
+  width: 80px;
+  border: 2px solid #999;
+  margin-bottom: 25px;
+}
+
+
+.grille-tuiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+}
+
+
+.tuile {
+  background: #aaa;
+  height: 180px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+}
+
+.tuile h4 {
+  font-size: 18px;
+  color: black;
+}
+
+.tuile button {
+  background: #4a4a18;
+  border: none;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.tuile button:hover {
+  opacity: 0.85;
+}
