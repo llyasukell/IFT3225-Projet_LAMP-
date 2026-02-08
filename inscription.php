@@ -13,8 +13,8 @@
     <div class="menu-navigation">
       <a class="btn-menu" href="index.html">Accueil</a>
       <a href="apropos.html">À propos</a>
-      <a href="connexion.html" class="btn-menu">Connexion</a>
-      <a href="inscription.html" class="actif">Inscription</a>
+      <a href="connexion.php" class="btn-menu">Connexion</a>
+      <a href="inscription.php" class="actif">Inscription</a>
     </div>
   </header>
 
