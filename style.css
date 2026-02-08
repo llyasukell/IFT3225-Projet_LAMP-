@@ -117,7 +117,7 @@ body {
 .tuile {
   position: relative; 
   background: #aaa;
-  height: 180px;
+  height: 300px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -156,7 +156,7 @@ body {
 }
 
 .tuile button:hover {
-  opacity: 0.85;
+  opacity: 0.80;
 }
 
 .tuile h4, .tuile button {
@@ -178,7 +178,7 @@ body {
   background: white;
   padding: 35px;
   border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  box-shadow: 25px 25px 25px rgba(0,0,0,0.25);
 }
 
 .box-connexion h2 {
@@ -212,17 +212,22 @@ body {
 }
 
 .box-connexion button:hover {
-  opacity: 0.85;
+  opacity: 0.80;
 }
 
 .signup-text {
   margin-top: 18px;
   font-size: 14px;
   text-align: left;
+  
 }
 
 .signup-text a {
   color: #4a4a18;
   font-weight: bold;
   text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
 }
