@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->execute()) {
         
-        header("Location: index.html"); 
+        header("Location: MenuApresCo.php"); 
         exit();
     } else {
         echo "Erreur lors de la création de la tuile : " . $conn->error;

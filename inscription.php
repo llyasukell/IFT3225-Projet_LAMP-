@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
   <header class="barre-navigation">
     <div class="logo">MonSite</div>
     <div class="menu-navigation">
-      <a class="btn-menu" href="index.html">Accueil</a>
+      <a class="btn-menu" href="index.php">Accueil</a>
       <a href="apropos.php">À propos</a>
       <a href="connexion.php" class="btn-menu">Connexion</a>
       <a href="inscription.php" class="actif">Inscription</a>

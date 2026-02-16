@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+
 #INSCRIPTION
 if (isset($_POST['register'])) {
     $name = trim($_POST['name']);

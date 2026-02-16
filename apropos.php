@@ -7,7 +7,7 @@ if (isset($_SESSION['user_id'])) {
     header("Location: MenuApresCo.php");
     exit();
 }
-
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
