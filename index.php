@@ -1,3 +1,13 @@
+
+<?php
+session_start();
+
+# Redirige vers l'accueil si déjà connecté
+if (isset($_SESSION['user_id'])) {
+    header("Location: MenuApresCo.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,7 +22,7 @@
     <div class="logo">MonSite</div>
     <div class="menu-navigation">
       <a class="actif" href="index.html">Accueil</a>
-      <a href="apropos.html">À propos</a>
+      <a href="apropos.php">À propos</a>
       <a href="connexion.php" class="btn-menu">Connexion</a>
       <a href="inscription.php" class="btn-menu">Inscription</a>
     </div>

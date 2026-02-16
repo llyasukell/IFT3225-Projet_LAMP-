@@ -1,3 +1,13 @@
+
+<?php
+session_start();
+
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: connexion.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,10 +21,10 @@
   <header class="barre-navigation">
     <div class="logo">MonSite</div>
     <div class="menu-navigation">
-      <a class="actif" href="index.html">Accueil</a>
-      <a href="apropos.html">À propos</a>
-      <a href="connexion.php" class="btn-menu">Connexion</a>
-      <a href="inscription.php" class="btn-menu">Inscription</a>
+      <a href="next.php">next</a>
+      <a class="actif" href="MenuApresCo.php">Menu</a>
+      <a href="PageCreationTuile.php" >Créer</a>
+      <a href="logout.php">Déconnexion</a>
     </div>
   </header>
 
