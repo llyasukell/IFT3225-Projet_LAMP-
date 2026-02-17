@@ -20,9 +20,10 @@ if (!isset($_SESSION['user_id'])) {
   <header class="barre-navigation">
     <div class="logo">MonSite</div>
     <div class="menu-navigation">
-      <a class="actif" href="next.php">Next</a>
-      <a href="MenuApresCo.php">Menu</a>
-      <a href="PageCreationTuile.php" >Créer</a>
+      <a class="actif" href="next.php">Explore</a>
+      <a  href="MenuApresCo.php">Menu</a>
+      <a href="PageCreationTuile.php">Créer</a>
+      <a  href="MesVoyages.php">Mes Voyages</a>
       <a href="logout.php">Déconnexion</a>
     </div>
   </header>

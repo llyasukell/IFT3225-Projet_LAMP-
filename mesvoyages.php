@@ -18,14 +18,15 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body class="bg-gris-clair">
 
-  <header class="barre-navigation nav-profil">
-    <div class="logo">✈️</div> <div class="menu-navigation">
+  <header class="barre-navigation">
+    <div class="logo">MonSite</div>
+    <div class="menu-navigation">
+      <a href="next.php">Explore</a>
       <a href="MenuApresCo.php">Menu</a>
-      <a href="index.php">Explorer</a>
+      <a href="PageCreationTuile.php">Créer</a>
+      <a class="actif" href="MesVoyages.php">Mes Voyages</a>
+      <a href="logout.php">Déconnexion</a>
     </div>
-    <div class="actions-profil">
-        <a href="#" class="btn-profil">Profil</a>
-        <a href="logout.php" class="btn-logout">⏻</a> </div>
   </header>
 
   <main class="contenu-mes-voyages">
