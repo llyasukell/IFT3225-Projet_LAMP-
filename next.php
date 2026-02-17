@@ -1,8 +1,7 @@
-
 <?php
 session_start();
 
-// Si l'id de l'utilisateur n'est pas dans la session, on le renvoie à la connexion
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: connexion.php");
     exit();
@@ -13,22 +12,40 @@ if (!isset($_SESSION['user_id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accueil - Bienvenue </title>
+  <title>Accueil - Explore</title>
   <link rel="stylesheet" href="style.css">
+  <script>
+    const IS_CONNECTED = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
+  </script>
 </head>
 <body>
   <header class="barre-navigation">
     <div class="logo">MonSite</div>
     <div class="menu-navigation">
-      <a class="actif" href="next.php">Next</a>
+      <a class="actif" href="next.php">Explore</a>
       <a href="MenuApresCo.php">Menu</a>
-      <a href="PageCreationTuile.php" >Créer</a>
+      <a href="PageCreationTuile.php">Créer</a>
+      <a href="MesVoyages.php">Mes Voyages</a>
       <a href="logout.php">Déconnexion</a>
     </div>
   </header>
 
- <h1>allo</h1>
+ <main class="contenu-principal">
 
- <a href="logout.php">Se déconnecter</a>
+  <div class="toolbar-voyages" style="justify-content: flex-start; margin-bottom: 20px;">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-explore" placeholder="Rechercher par titre ou auteur...">
+    </div>
+  </div>
+
+
+    <div class="grille-tuiles" id="grille-tuiles">
+        </div>
+ </main>
+
+ <div class="pagination" id="pagination-explore"></div>
+
+ <script src="tuiles.js"></script>
 </body>
 </html>

@@ -23,9 +23,10 @@ if (!isset($_SESSION['user_id'])) {
   <div class="barre-navigation">
     <div class="logo">TravelBook</div>
     <div class="menu-navigation">
-      <a href="next.php">next</a>
-      <a href="MenuApresCo.php">Menu</a>
-      <a href="PageCreationTuile.php" class="actif">Créer</a>
+      <a href="next.php">Explore</a>
+      <a  href="MenuApresCo.php">Menu</a>
+      <a class="actif" href="PageCreationTuile.php">Créer</a>
+      <a  href="MesVoyages.php">Mes Voyages</a>
       <a href="logout.php">Déconnexion</a>
     </div>
   </div>

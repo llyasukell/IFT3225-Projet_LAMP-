@@ -1,31 +1,49 @@
 <?php
 session_start();
-// Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "travelbook"; // Remplace par le nom de ta base
+require_once "config.php";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérification de la connexion
-if ($conn->connect_error) {
-    die("Erreur de connexion : " . $conn->connect_error);
-}
-
-// On vérifie que l'utilisateur est bien connecté
 if (!isset($_SESSION['user_id'])) {
-    echo json_encode([]);
+    echo json_encode(['trips' => [], 'total' => 0]);
     exit();
 }
 
 $user_id = $_SESSION['user_id'];
+$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 15;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$offset = ($page - 1) * $limit;
 
-// On récupère uniquement les voyages de cet utilisateur
-// Assure-toi que ta table s'appelle 'trips' et possède une colonne 'user_id'
-$sql = "SELECT * FROM trips WHERE user_id = ? ORDER BY travel_date DESC";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
+// Compter le nombre total de voyages de l'utilisateur (avec filtre)
+if ($search !== '') {
+    $searchTerm = '%' . $search . '%';
+    $countStmt = $conn->prepare("SELECT COUNT(*) as total FROM trips WHERE user_id = ? AND title LIKE ?");
+    $countStmt->bind_param("is", $user_id, $searchTerm);
+    $countStmt->execute();
+    $countResult = $countStmt->get_result();
+} else {
+    $countStmt = $conn->prepare("SELECT COUNT(*) as total FROM trips WHERE user_id = ?");
+    $countStmt->bind_param("i", $user_id);
+    $countStmt->execute();
+    $countResult = $countStmt->get_result();
+}
+$totalRow = $countResult->fetch_assoc();
+$totalTrips = (int)$totalRow['total'];
+
+// Récupérer les voyages avec filtre et pagination
+$sql = "SELECT t.*, 
+        (SELECT COUNT(*) FROM likes WHERE trip_id = t.id) as like_count 
+        FROM trips t 
+        WHERE t.user_id = ? ";
+
+if ($search !== '') {
+    $sql .= " AND t.title LIKE ? ";
+    $stmt = $conn->prepare($sql . " ORDER BY t.created_at DESC LIMIT ? OFFSET ?");
+    $stmt->bind_param("isii", $user_id, $searchTerm, $limit, $offset);
+} else {
+    $stmt = $conn->prepare($sql . " ORDER BY t.created_at DESC LIMIT ? OFFSET ?");
+    $stmt->bind_param("iii", $user_id, $limit, $offset);
+}
+
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -34,9 +52,13 @@ while($row = $result->fetch_assoc()) {
     $trips[] = $row;
 }
 
-// On renvoie le résultat au format JSON pour le JavaScript
 header('Content-Type: application/json');
-echo json_encode($trips);
+echo json_encode([
+    'trips' => $trips,
+    'total' => $totalTrips,
+    'page' => $page,
+    'limit' => $limit
+]);
 
 $stmt->close();
 $conn->close();

@@ -21,7 +21,7 @@ exit();
 <header class="barre-navigation">
 <div class="logo">MonSite</div>
 <div class="menu-navigation">
-<a href="next.php">next</a>
+<a href="next.php">Explore</a>
 <a class="actif" href="MenuApresCo.php">Menu</a>
 <a href="PageCreationTuile.php">Créer</a>
 <a href="MesVoyages.php">Mes Voyages</a>
@@ -40,7 +40,6 @@ exit();
 <main class="contenu-principal">
 <section class="tuiles">
 <h3>À la une</h3>
-<hr>
 <div class="grille-tuiles" id="grille-tuiles"></div>
 </section>
 </main>
