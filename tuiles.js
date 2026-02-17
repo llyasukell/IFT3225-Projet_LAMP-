@@ -44,3 +44,43 @@ fetch('get_trips.php')
     
   })
   .catch(err => console.error("Erreur :", err));
+
+const maGrillePerso = document.getElementById("grille-mes-voyages");
+
+if (maGrillePerso) {
+    fetch('get_user_trips.php')
+        .then(response => response.json())
+        .then(data => {
+            maGrillePerso.innerHTML = ""; // On vide les exemples HTML pour mettre les vrais
+            
+            if (data.length === 0) {
+                maGrillePerso.innerHTML = "<p>Vous n'avez pas encore partagé de voyages.</p>";
+                return;
+            }
+
+            data.forEach(voyage => {
+                const carte = document.createElement("div");
+                carte.className = "carte-voyage";
+                
+                carte.innerHTML = `
+                    <div class="carte-header">
+                        <span class="tag-continent ${voyage.region ? voyage.region.toLowerCase() : ''}">
+                            ${voyage.region ? voyage.region.toUpperCase() : 'VOYAGE'}
+                        </span>
+                        <span class="likes">0 LIKES</span>
+                    </div>
+                    <img src="uploads/${voyage.image_path}" class="img-voyage">
+                    <div class="carte-info">
+                        <p class="date">${voyage.travel_date}</p>
+                        <p class="titre">${voyage.title}</p>
+                    </div>
+                    <div class="carte-actions">
+                        <button class="btn-modifier" onclick="window.location.href='modifier.php?id=${voyage.id}'">MODIFIER</button>
+                        <button class="btn-supprimer" onclick="if(confirm('Supprimer ce voyage ?')) window.location.href='delete_trip.php?id=${voyage.id}'">SUPPRIMER</button>
+                    </div>
+                `;
+                maGrillePerso.appendChild(carte);
+            });
+        })
+        .catch(err => console.log("Note: Pas sur la page profil ou erreur de fetch."));
+}
