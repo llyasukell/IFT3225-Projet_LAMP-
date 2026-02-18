@@ -35,7 +35,7 @@ if (!isset($_SESSION['user_id'])) {
     <div class="toolbar-voyages">
       <div class="search-container">
         <span class="search-icon">🔍</span>
-        <input type="text" placeholder="Search">
+        <input type="text" id="search-mes-voyages" placeholder="Search">
       </div>
       
       <div class="sort-container">

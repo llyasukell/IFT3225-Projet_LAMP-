@@ -75,7 +75,7 @@ if (searchExplore) {
 //  PARTIE MES VOYAGES 
 const maGrillePerso = document.getElementById("grille-mes-voyages");
 const paginationMesVoyages = document.getElementById("pagination-mesvoyages");
-const searchMesVoyages = document.querySelector(".search-container input");
+const searchMesVoyages = document.getElementById("search-mes-voyages");
 let currentPageMesVoyages = 1;
 let currentSearchMesVoyages = '';
 
