@@ -11,7 +11,7 @@ $user_id = $_SESSION['user_id'];
 $message = "";
 
 // 1. Récupérer les infos de l'utilisateur
-$stmt = $conn->prepare("SELECT username, profile_pic FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT name, profile_pic FROM users WHERE id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
