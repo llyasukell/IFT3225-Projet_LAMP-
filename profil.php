@@ -57,7 +57,7 @@ $photo_a_afficher = !empty($user['profile_pic']) ? "uploads/" . $user['profile_p
 
     <div class="page-connexion">
         <div class="tuile-creation" style="text-align: center;">
-            <h2>Profil de <?php echo htmlspecialchars($user['username']); ?></h2>
+            <h2>Profil de <?php echo htmlspecialchars($user['name']); ?></h2>
             
             <img src="<?php echo $photo_a_afficher; ?>" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:20px; border: 2px solid #007bff;">
 
