@@ -19,9 +19,9 @@ if (isset($_SESSION['user_id'])) {
 <body>
 
   <header class="barre-navigation">
-    <div class="logo">MonSite</div>
+    <div class="logo">TravelBook</div>
     <div class="menu-navigation">
-      <a class="actif" href="index.html">Accueil</a>
+      <a class="actif" href="index.php">Accueil</a>
       <a href="apropos.php">À propos</a>
       <a href="connexion.php" class="btn-menu">Connexion</a>
       <a href="inscription.php" class="btn-menu">Inscription</a>

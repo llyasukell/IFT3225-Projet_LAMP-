@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
 <body>
 
   <header class="barre-navigation">
-    <div class="logo">MonSite</div>
+    <div class="logo">TravelBook</div>
     <div class="menu-navigation">
       <a class="btn-menu" href="index.php">Accueil</a>
       <a href="apropos.php">À propos</a>
