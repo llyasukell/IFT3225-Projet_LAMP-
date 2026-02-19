@@ -54,6 +54,22 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $stmt->bind_param("issssss",$user_id,$title,$location,$region,$travel_date,$description,$image_path);
 
     if($stmt->execute()){
+
+        $trip_id = $conn->insert_id;
+
+        if (!empty($_FILES['trip_photos']['name'][0])) {
+            foreach ($_FILES['trip_photos']['tmp_name'] as $k => $tmp_name) {
+                if ($_FILES['trip_photos']['error'][$k] === 0) {
+                    $fname = time() . "_" . $_FILES['trip_photos']['name'][$k];
+                    if (move_uploaded_file($tmp_name, "uploads/" . $fname)) {
+                        $ins = $conn->prepare("INSERT INTO trip_photos (trip_id, photo_path) VALUES (?, ?)");
+                        $ins->bind_param("is", $trip_id, $fname);
+                        $ins->execute();
+                    }
+                }
+            }
+        }
+
         header("Location: MenuApresCo.php"); 
         exit();
     }else{

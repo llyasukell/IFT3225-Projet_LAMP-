@@ -64,7 +64,8 @@ function loadExploreTrips(page = 1, search = '', region = '', sort = 'recent') {
                         let extraImagesHTML = '';
                         if (voyage.extra_photos && voyage.extra_photos.length > 0) {
                             voyage.extra_photos.forEach(photo => {
-                                extraImagesHTML += `<img src="uploads/${photo}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">`;
+                                // Ajout de onclick pour agrandir l'image
+                                extraImagesHTML += `<img src="uploads/${photo}" onclick="ouvrirPleinEcran(this.src)" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px; cursor: pointer;">`;
                             });
                         } else {
                             extraImagesHTML = '<p style="color: #666; font-size: 0.9em;">Aucune photo supplémentaire.</p>';
@@ -296,4 +297,18 @@ function gererLike(tripId) {
         }
     })
     .catch(err => console.error("Erreur de like:", err));
+}
+
+// FONCTION POUR OUVRIR UNE IMAGE EN PLEIN ÉCRAN
+function ouvrirPleinEcran(src) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; z-index:2000; cursor:zoom-out;";
+    
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.cssText = "max-width:90%; max-height:90%; border-radius:5px; box-shadow: 0 0 20px rgba(0,0,0,0.5);";
+    
+    overlay.appendChild(img);
+    overlay.onclick = () => document.body.removeChild(overlay);
+    document.body.appendChild(overlay);
 }
