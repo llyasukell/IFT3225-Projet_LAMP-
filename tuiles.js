@@ -227,12 +227,22 @@ function gererLike(tripId) {
     })
     .then(res => res.json())
     .then(data => {
-        if(data.total !== undefined) {
+        if (data.total !== undefined) {
+            // On cherche tous les compteurs de ce voyage (dans Explore et Mes Voyages)
             const likeSpans = document.querySelectorAll(`[id="count-${tripId}"]`);
             likeSpans.forEach(span => {
                 span.textContent = `${data.total} LIKES`;
             });
         }
     })
-    .catch(err => console.error("Erreur like:", err));
+    .catch(err => console.error("Erreur de like:", err));
+}
+
+// Initialisation et Recherche
+if (searchExplore) {
+    searchExplore.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        currentSearchExplore = e.target.value;
+        searchTimeout = setTimeout(() => loadExploreTrips(1, currentSearchExplore), 300);
+    });
 }

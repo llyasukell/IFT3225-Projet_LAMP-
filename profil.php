@@ -50,8 +50,16 @@ $photo_a_afficher = !empty($user['profile_pic']) ? "uploads/" . $user['profile_p
     <div class="barre-navigation">
         <div class="logo">TravelBook</div>
         <div class="menu-navigation">
-            <a href="MenuApresCo.php">Menu</a>
-            <a href="logout.php">Déconnexion</a>
+        <a href="next.php">Explore</a>
+        <a href="MenuApresCo.php">Menu</a>
+        <a href="PageCreationTuile.php">Créer</a>
+        <a href="MesVoyages.php">Mes Voyages</a>
+        
+        <a href="profil.php" style="display: inline-flex; align-items: center; gap: 8px;">
+            <img src="<?php echo $photo_a_afficher; ?>" alt="Profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid white;">
+            Mon Profil
+        </a>
+        <a href="logout.php">Déconnexion</a>
         </div>
     </div>
 

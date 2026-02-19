@@ -1,11 +1,14 @@
 <?php
 session_start();
-
+require_once "config.php";
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: connexion.php");
     exit();
 }
+
+require_once "header.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -20,13 +23,19 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body>
   <header class="barre-navigation">
-    <div class="logo">MonSite</div>
+    <div class="logo">TravelBook</div>
     <div class="menu-navigation">
-      <a class="actif" href="next.php">Explore</a>
-      <a href="MenuApresCo.php">Menu</a>
-      <a href="PageCreationTuile.php">Créer</a>
-      <a href="MesVoyages.php">Mes Voyages</a>
-      <a href="logout.php">Déconnexion</a>
+        <a class="actif" href="next.php">Explore</a>
+        <a href="MenuApresCo.php">Menu</a>
+        <a href="PageCreationTuile.php">Créer</a>
+        <a href="MesVoyages.php">Mes Voyages</a>
+        
+        <a href="profil.php" style="display: inline-flex; align-items: center; gap: 8px;">
+            <img src="<?php echo $photo; ?>" alt="Profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid white;">
+            Mon Profil
+        </a>
+
+        <a href="logout.php">Déconnexion</a>
     </div>
   </header>
 

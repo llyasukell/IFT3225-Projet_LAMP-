@@ -1,21 +1,14 @@
 <?php
 session_start();
-require_once "config.php"; // On ajoute la connexion à la base
+require_once "config.php";
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: connexion.php");
     exit();
 }
 
-// --- NOUVEAU : Récupérer la photo de profil ---
-$user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT profile_pic FROM users WHERE id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$res = $stmt->get_result()->fetch_assoc();
+require_once "header.php";
 
-// Si l'utilisateur a une photo, on la prend, sinon on met un avatar par défaut
-$photo = !empty($res['profile_pic']) ? "uploads/".$res['profile_pic'] : "https://www.w3schools.com/howto/img_avatar.png";
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +22,7 @@ $photo = !empty($res['profile_pic']) ? "uploads/".$res['profile_pic'] : "https:/
 <body>
 
 <header class="barre-navigation">
-    <div class="logo">MonSite</div>
+    <div class="logo">TravelBook</div>
     <div class="menu-navigation">
         <a href="next.php">Explore</a>
         <a class="actif" href="MenuApresCo.php">Menu</a>
