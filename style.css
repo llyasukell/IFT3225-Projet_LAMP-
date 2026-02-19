@@ -477,3 +477,23 @@ body {
 }
 
 
+.auteur-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+  margin: 5px 0;
+}
+
+.avatar-auteur {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid white;
+}
+
+.nom-auteur {
+  margin: 0 !important; 
+}

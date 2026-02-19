@@ -44,7 +44,7 @@ if ($sort === 'old') $orderSql = " ORDER BY t.created_at ASC";
 if ($sort === 'popular') $orderSql = " ORDER BY like_count DESC";
 
 // Requête principale
-$sql = "SELECT t.*, u.name as author_name, 
+$sql = "SELECT t.*, u.name as author_name, u.profile_pic as author_pic, 
         (SELECT COUNT(*) FROM likes WHERE trip_id = t.id) as like_count
         FROM trips t 
         JOIN users u ON t.user_id = u.id" . $whereSql . $orderSql . " LIMIT ? OFFSET ?";

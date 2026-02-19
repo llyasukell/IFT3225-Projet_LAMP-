@@ -31,6 +31,9 @@ function loadExploreTrips(page = 1, search = '', region = '', sort = 'recent') {
                 grilleTuiles.innerHTML = "<p>Aucun voyage trouvé.</p>";
             } else {
                 voyages.forEach(voyage => {
+                    // Photo de profil de l'auteur
+                    const profPic = voyage.author_pic ? 'uploads/' + voyage.author_pic : 'https://www.w3schools.com/howto/img_avatar.png';
+
                     const tuile = document.createElement("article");
                     tuile.className = "tuile";
                     tuile.innerHTML = `
@@ -39,7 +42,12 @@ function loadExploreTrips(page = 1, search = '', region = '', sort = 'recent') {
                                 ${voyage.region ? voyage.region.toUpperCase() : 'VOYAGE'}
                         </span>
                         <span class="likes" id="count-${voyage.id}">${voyage.like_count || 0} LIKES</span>
-                        <p class="nom-auteur">Par : ${voyage.author_name}</p>
+                        
+                        <div class="auteur-container" style="display: flex; align-items: center; gap: 8px; margin: 5px 0;">
+                            <img src="${profPic}" class="avatar-auteur" style="width: 25px; height: 25px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd;">
+                            <p class="nom-auteur" style="margin: 0;">Par : ${voyage.author_name}</p>
+                        </div>
+
                         <h4>${voyage.title}</h4>
                         <div class="boutons-actions">
                             <button class="btn-info" id="info-${voyage.id}">Voir les détails</button>
