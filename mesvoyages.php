@@ -41,14 +41,18 @@ require_once "header.php";
   <main class="contenu-mes-voyages">
     <h1 class="titre-page">MES VOYAGES PARTAGÉS</h1>
 
-    <div class="toolbar-voyages">
+    <div class="toolbar-voyages" style="justify-content: flex-start; margin-bottom: 20px; gap: 15px; display: flex; flex-wrap: wrap;">
       <div class="search-container">
         <span class="search-icon">🔍</span>
         <input type="text" id="search-mes-voyages" placeholder="Search">
       </div>
       
-      <div class="sort-container">
-        <span>TRIER PAR: <strong class="sort-highlight">DATE</strong></span>
+      <div class="filter-container">
+        <select id="sort-mes-voyages" class="select-style">
+          <option value="recent">Plus récents</option>
+          <option value="old">Plus anciens</option>
+          <option value="popular">Plus aimés (Likes)</option>
+        </select>
       </div>
 
       <a href="PageCreationTuile.php" class="btn-nouveau-voyage">NOUVEAU VOYAGE</a>
@@ -58,7 +62,7 @@ require_once "header.php";
       
     </section>
 
-    <div class="pagination" id="pagination-mes-voyages"></div>
+    <div class="pagination" id="pagination-mesvoyages"></div>
     
 
   </main>

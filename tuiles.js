@@ -5,14 +5,19 @@ let searchTimeout;
 const grilleTuiles = document.getElementById("grille-tuiles");
 const paginationExplore = document.getElementById("pagination-explore");
 const searchExplore = document.getElementById("search-explore");
+const filterRegionExplore = document.getElementById("filter-region");
+const sortExplore = document.getElementById("sort-explore");
+
 let currentPageExplore = 1;
 let currentSearchExplore = '';
+let currentRegionExplore = '';
+let currentSortExplore = 'recent';
 
-function loadExploreTrips(page = 1, search = '') {
+function loadExploreTrips(page = 1, search = '', region = '', sort = 'recent') {
     let url = `get_trips.php?page=${page}&limit=${LIMIT}`;
-    if (search) {
-        url += `&search=${encodeURIComponent(search)}`;
-    }
+    if (search) url += `&search=${encodeURIComponent(search)}`;
+    if (region) url += `&region=${encodeURIComponent(region)}`;
+    if (sort) url += `&sort=${encodeURIComponent(sort)}`;
 
     fetch(url)
         .then(response => response.json())
@@ -86,21 +91,30 @@ function loadExploreTrips(page = 1, search = '') {
             if (paginationExplore) {
                 generatePagination(totalPages, page, paginationExplore, (newPage) => {
                     currentPageExplore = newPage;
-                    loadExploreTrips(newPage, currentSearchExplore);
+                    loadExploreTrips(newPage, currentSearchExplore, currentRegionExplore, currentSortExplore);
                 });
             }
         });
 }
 
+// Listeners Explore
 if (searchExplore) {
-    searchExplore.addEventListener('input', function(e) {
+    searchExplore.addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
-        const term = e.target.value;
-        currentSearchExplore = term;
-        currentPageExplore = 1;
-        searchTimeout = setTimeout(() => {
-            loadExploreTrips(1, term);
-        }, 300);
+        currentSearchExplore = e.target.value;
+        searchTimeout = setTimeout(() => loadExploreTrips(1, currentSearchExplore, currentRegionExplore, currentSortExplore), 300);
+    });
+}
+if (filterRegionExplore) {
+    filterRegionExplore.addEventListener('change', (e) => {
+        currentRegionExplore = e.target.value;
+        loadExploreTrips(1, currentSearchExplore, currentRegionExplore, currentSortExplore);
+    });
+}
+if (sortExplore) {
+    sortExplore.addEventListener('change', (e) => {
+        currentSortExplore = e.target.value;
+        loadExploreTrips(1, currentSearchExplore, currentRegionExplore, currentSortExplore);
     });
 }
 
@@ -108,14 +122,16 @@ if (searchExplore) {
 const maGrillePerso = document.getElementById("grille-mes-voyages");
 const paginationMesVoyages = document.getElementById("pagination-mesvoyages");
 const searchMesVoyages = document.getElementById("search-mes-voyages");
+const sortMesVoyages = document.getElementById("sort-mes-voyages");
+
 let currentPageMesVoyages = 1;
 let currentSearchMesVoyages = '';
+let currentSortMesVoyages = 'recent';
 
-function loadMesVoyages(page = 1, search = '') {
+function loadMesVoyages(page = 1, search = '', sort = 'recent') {
     let url = `get_user_trips.php?page=${page}&limit=${LIMIT}`;
-    if (search) {
-        url += `&search=${encodeURIComponent(search)}`;
-    }
+    if (search) url += `&search=${encodeURIComponent(search)}`;
+    if (sort) url += `&sort=${encodeURIComponent(sort)}`;
 
     fetch(url)
         .then(res => res.json())
@@ -158,7 +174,7 @@ function loadMesVoyages(page = 1, search = '') {
             if (paginationMesVoyages) {
                 generatePagination(totalPages, page, paginationMesVoyages, (newPage) => {
                     currentPageMesVoyages = newPage;
-                    loadMesVoyages(newPage, currentSearchMesVoyages);
+                    loadMesVoyages(newPage, currentSearchMesVoyages, currentSortMesVoyages);
                 });
             }
         });
@@ -167,22 +183,26 @@ function loadMesVoyages(page = 1, search = '') {
 if (searchMesVoyages) {
     searchMesVoyages.addEventListener('input', function(e) {
         clearTimeout(searchTimeout);
-        const term = e.target.value;
-        currentSearchMesVoyages = term;
-        currentPageMesVoyages = 1;
+        currentSearchMesVoyages = e.target.value;
         searchTimeout = setTimeout(() => {
-            loadMesVoyages(1, term);
+            loadMesVoyages(1, currentSearchMesVoyages, currentSortMesVoyages);
         }, 300);
+    });
+}
+if (sortMesVoyages) {
+    sortMesVoyages.addEventListener('change', (e) => {
+        currentSortMesVoyages = e.target.value;
+        loadMesVoyages(1, currentSearchMesVoyages, currentSortMesVoyages);
     });
 }
 
 //  CHARGEMENT INITIAL 
 if (grilleTuiles) {
-    loadExploreTrips(1, '');
+    loadExploreTrips(1, '', '', 'recent');
 }
 
 if (maGrillePerso) {
-    loadMesVoyages(1, '');
+    loadMesVoyages(1, '', 'recent');
 }
 
 //  FONCTION DE PAGINATION 
@@ -268,13 +288,4 @@ function gererLike(tripId) {
         }
     })
     .catch(err => console.error("Erreur de like:", err));
-}
-
-// Initialisation et Recherche
-if (searchExplore) {
-    searchExplore.addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        currentSearchExplore = e.target.value;
-        searchTimeout = setTimeout(() => loadExploreTrips(1, currentSearchExplore), 300);
-    });
 }
