@@ -57,13 +57,13 @@ require_once "header.php";
       <form action="create_trip.php" method="post" enctype="multipart/form-data">
         
         <label>Titre</label>
-        <input type="text" name="title" value="<?php echo isset($_SESSION['old_data']['title']) ? htmlspecialchars($_SESSION['old_data']['title']) : ''; ?>">
+        <input type="text" name="title" value="<?php echo isset($_SESSION['old_data']['title']) ? htmlspecialchars($_SESSION['old_data']['title']) : ''; ?>" required>
 
         <label>Pays</label>
-        <input type="text" name="location" value="<?php echo isset($_SESSION['old_data']['location']) ? htmlspecialchars($_SESSION['old_data']['location']) : ''; ?>">
+        <input type="text" name="location" value="<?php echo isset($_SESSION['old_data']['location']) ? htmlspecialchars($_SESSION['old_data']['location']) : ''; ?>" required>
 
         <label>Région</label>
-        <select name="region">
+        <select name="region" required>
             <option <?php echo (isset($_SESSION['old_data']['region']) && $_SESSION['old_data']['region'] == 'Europe') ? 'selected' : ''; ?>>Europe</option>
             <option <?php echo (isset($_SESSION['old_data']['region']) && $_SESSION['old_data']['region'] == 'Asie') ? 'selected' : ''; ?>>Asie</option>
             <option <?php echo (isset($_SESSION['old_data']['region']) && $_SESSION['old_data']['region'] == 'Amérique') ? 'selected' : ''; ?>>Amérique</option>
@@ -71,13 +71,13 @@ require_once "header.php";
         </select>
 
         <label>Date de voyage</label>
-        <input type="date" name="travel_date" value="<?php echo isset($_SESSION['old_data']['travel_date']) ? htmlspecialchars($_SESSION['old_data']['travel_date']) : ''; ?>">
+        <input type="date" name="travel_date" required value="<?php echo isset($_SESSION['old_data']['travel_date']) ? htmlspecialchars($_SESSION['old_data']['travel_date']) : ''; ?>" >
 
         <label>Description</label>
         <textarea name="description" rows="5"><?php echo isset($_SESSION['old_data']['description']) ? htmlspecialchars($_SESSION['old_data']['description']) : ''; ?></textarea>
 
         <label>Image</label>
-        <input type="file" name="image" accept="image/*">
+        <input type="file" name="image" accept="image/*" required>
 
         <label>Photos de voyage (Plusieurs possibles)</label>
         <input type="file" name="trip_photos[]" accept="image/*" multiple>
