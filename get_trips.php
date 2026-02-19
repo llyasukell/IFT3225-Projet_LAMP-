@@ -39,6 +39,19 @@ $result = $stmt->get_result();
 
 $trips = [];
 while ($row = $result->fetch_assoc()) {
+    $trip_id = $row['id'];
+    
+    $pStmt = $conn->prepare("SELECT photo_path FROM trip_photos WHERE trip_id = ?");
+    $pStmt->bind_param("i", $trip_id);
+    $pStmt->execute();
+    $pRes = $pStmt->get_result();
+    
+    $photos = [];
+    while($pRow = $pRes->fetch_assoc()) { 
+        $photos[] = $pRow['photo_path']; 
+    }
+    
+    $row['extra_photos'] = $photos;
     $trips[] = $row;
 }
 

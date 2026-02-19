@@ -45,8 +45,40 @@ function loadExploreTrips(page = 1, search = '') {
                     `;
                     grilleTuiles.appendChild(tuile);
 
+                    // Création de la modale au clic
                     document.getElementById(`info-${voyage.id}`).onclick = () => {
-                        alert(` Pays : ${voyage.location}\n\n Description : ${voyage.description || 'Aucune description'}`);
+                        // Préparation des images supplémentaires
+                        let extraImagesHTML = '';
+                        if (voyage.extra_photos && voyage.extra_photos.length > 0) {
+                            voyage.extra_photos.forEach(photo => {
+                                extraImagesHTML += `<img src="uploads/${photo}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">`;
+                            });
+                        } else {
+                            extraImagesHTML = '<p style="color: #666; font-size: 0.9em;">Aucune photo supplémentaire.</p>';
+                        }
+
+                        // Création du conteneur de la modale
+                        const modal = document.createElement('div');
+                        modal.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:flex; justify-content:center; align-items:center; z-index:1000;";
+                        modal.innerHTML = `
+                            <div style="background:white; padding:20px; border-radius:10px; max-width:600px; width:90%; text-align:center; max-height: 80vh; overflow-y: auto;">
+                                <h2 style="margin-bottom: 10px;">${voyage.title} <span style="font-size: 0.7em; color: gray;">(${voyage.location})</span></h2>
+                                <p style="margin-bottom: 20px; line-height: 1.5;">${voyage.description || 'Aucune description'}</p>
+                                
+                                <div style="display:flex; flex-wrap:wrap; justify-content:center; gap: 10px; margin-top:15px;">
+                                    ${extraImagesHTML}
+                                </div>
+                                
+                                <button id="close-modal-${voyage.id}" style="margin-top:20px; padding:10px 20px; cursor:pointer; background:#333; color:white; border:none; border-radius:5px;">Fermer</button>
+                            </div>
+                        `;
+                        
+                        document.body.appendChild(modal);
+                        
+                        // Fermeture de la modale
+                        document.getElementById(`close-modal-${voyage.id}`).onclick = () => {
+                            document.body.removeChild(modal);
+                        };
                     };
                 });
             }

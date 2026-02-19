@@ -1,3 +1,4 @@
+/* GÉNÉRAUX */
 * {
   margin: 0;
   padding: 0;
@@ -9,9 +10,7 @@ body {
   background: #f2f2f2;
 }
 
-
-
-
+/* BARRE DE NAVIGATION */
 .barre-navigation {
   background: white;
   display: flex;
@@ -35,7 +34,6 @@ body {
   color: black;
   padding: 8px 20px;
   border-radius: 3px;
-  transition: 0.2s;
 }
 
 .menu-navigation a.actif {
@@ -43,7 +41,7 @@ body {
   color: white;
 }
 
-
+/* BANNIÈRE PRINCIPALE */
 .banniere-principale {
   height: 350px;
   background: url("worldmap.jpg") center/cover no-repeat;
@@ -89,7 +87,7 @@ body {
   opacity: 0.85;
 }
 
-
+/* SECTION TUILES */
 .tuiles {
   padding: 30px 50px;
 }
@@ -105,13 +103,11 @@ body {
   margin-bottom: 25px;
 }
 
-
 .grille-tuiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 30px;
 }
-
 
 .tuile {
   position: relative; 
@@ -127,7 +123,6 @@ body {
   overflow: hidden; 
 }
 
-
 .image-tuile {
   position: absolute;
   top: 0;
@@ -138,11 +133,11 @@ body {
   z-index: 1; 
 }
 
-
-
 .tuile h4 {
   font-size: 18px;
   color: black;
+  position: relative;
+  z-index: 2;
 }
 
 .tuile button {
@@ -152,18 +147,25 @@ body {
   padding: 8px 18px;
   border-radius: 10px;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
 }
 
 .tuile button:hover {
   opacity: 0.80;
 }
 
-.tuile h4, .tuile button {
-  position: relative;
-  z-index: 2;
+.nom-auteur {
+  position: relative; 
+  z-index: 2;        
+  font-size: 14px;
+  color: white;      
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
+  margin: 5px 0;
 }
 
-
+/* PAGES CONNEXION/INSCRIPTION */
 .page-connexion {
   height: 100vh;
   background: url("worldmap.jpg") center/cover no-repeat;
@@ -218,7 +220,6 @@ body {
   margin-top: 18px;
   font-size: 14px;
   text-align: left;
-  
 }
 
 .signup-text a {
@@ -231,6 +232,7 @@ body {
   text-decoration: underline;
 }
 
+/* PAGE CRÉATION TUILES */
 .tuile-creation {
   width: 380px;
   background: white;
@@ -275,54 +277,10 @@ body {
   opacity: 0.80;
 }
 
-.nom-auteur {
-  position: relative; 
-  z-index: 2;        
-  font-size: 14px;
-  color: white;      
-  font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
-  margin: 5px 0;
-}
-.tuile h4 {
-  margin-bottom: 10px;
-}
-
-
-
-
-
+/* PAGE MES VOYAGE */
 .bg-gris-clair {
   background-color: #d1d5db; 
 }
-
-
-.nav-profil {
-  justify-content: space-between;
-  border-bottom: 2px solid #ccc;
-}
-.nav-profil .menu-navigation a {
-  font-weight: bold;
-}
-.actions-profil {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.btn-profil {
-  background: black;
-  color: white;
-  padding: 8px 25px;
-  text-decoration: none;
-  font-weight: bold;
-}
-.btn-logout {
-  font-size: 24px;
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
-}
-
 
 .contenu-mes-voyages {
   max-width: 1100px;
@@ -336,7 +294,6 @@ body {
   margin-bottom: 40px;
   font-weight: bold;
 }
-
 
 .toolbar-voyages {
   display: flex;
@@ -353,6 +310,7 @@ body {
   border-radius: 5px;
   width: 300px;
 }
+
 .search-container input {
   border: none;
   outline: none;
@@ -365,6 +323,7 @@ body {
   font-weight: bold;
   color: #555;
 }
+
 .sort-highlight {
   font-family: serif; 
   font-size: 20px;
@@ -380,10 +339,10 @@ body {
   font-weight: bold;
   font-size: 14px;
 }
+
 .btn-nouveau-voyage:hover {
   background: #2b8a44;
 }
-
 
 .grille-profil {
   display: grid;
@@ -416,17 +375,8 @@ body {
   border-radius: 15px;
   z-index: 1;
 }
-.tag-continent.europe { background: #34A853; } 
-.tag-continent.afrique { background: #FB8C00; } 
-.tag-continent.amerique { background: #3F51B5; } 
-
-.likes {
-  font-size: 12px;
-  font-weight: bold;
-}
 
 .img-voyage {
-  
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -466,6 +416,7 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+
 .btn-modifier { background: #4285F4; } 
 .btn-supprimer { background: #EA4335; } 
 
@@ -473,7 +424,7 @@ body {
   opacity: 0.8;
 }
 
-
+/* PAGINATION */
 .pagination {
   display: flex;
   justify-content: center;
@@ -496,12 +447,11 @@ body {
   background: #4285F4;
   color: white;
 }
-.pagination button:hover:not(.actif) {
-  background: #f0f0f0;
-}
 
-
+/* LIKES */
 .likes {
+  font-size: 12px;
+  font-weight: bold;
   color: white;       
   text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
 }
@@ -516,7 +466,6 @@ body {
   color: #ff4d4d; 
 }
 
-
 .grille-tuiles .tuile .likes {
   position: absolute;
   top: 10px;
@@ -526,3 +475,5 @@ body {
   padding: 4px 8px;
   border-radius: 12px;
 }
+
+

@@ -79,6 +79,9 @@ require_once "header.php";
         <label>Image</label>
         <input type="file" name="image" accept="image/*">
 
+        <label>Photos de voyage (Plusieurs possibles)</label>
+        <input type="file" name="trip_photos[]" accept="image/*" multiple>
+
         <button type="submit" class="btn-principal">Créer</button>
       </form>
       <?php unset($_SESSION['old_data']); // On vide les anciennes données après remplissage ?>

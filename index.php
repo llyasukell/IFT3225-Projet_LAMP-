@@ -32,7 +32,9 @@ if (isset($_SESSION['user_id'])) {
     <div class="overlay-banniere">
       <img class="image-principale" src="worldmap.png" alt="Carte du monde">
       <h2>Le monde à votre portée</h2>
-      <button class="btn-principal">Découvrir</button>
+      <a href="inscription.php">
+        <button class="btn-principal">Découvrir</button>
+      </a>
     </div>
   </section>
 

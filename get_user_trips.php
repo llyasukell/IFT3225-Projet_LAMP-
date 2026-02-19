@@ -13,7 +13,6 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $offset = ($page - 1) * $limit;
 
-// Compter le nombre total de voyages de l'utilisateur (avec filtre)
 if ($search !== '') {
     $searchTerm = '%' . $search . '%';
     $countStmt = $conn->prepare("SELECT COUNT(*) as total FROM trips WHERE user_id = ? AND title LIKE ?");
@@ -29,11 +28,7 @@ if ($search !== '') {
 $totalRow = $countResult->fetch_assoc();
 $totalTrips = (int)$totalRow['total'];
 
-// Récupérer les voyages avec filtre et pagination
-$sql = "SELECT t.*, 
-        (SELECT COUNT(*) FROM likes WHERE trip_id = t.id) as like_count 
-        FROM trips t 
-        WHERE t.user_id = ? ";
+$sql = "SELECT t.*, (SELECT COUNT(*) FROM likes WHERE trip_id = t.id) as like_count FROM trips t WHERE t.user_id = ? ";
 
 if ($search !== '') {
     $sql .= " AND t.title LIKE ? ";
@@ -48,18 +43,19 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 $trips = [];
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
+    $trip_id = $row['id'];
+    
+    // Ajout : Récupération des photos secondaires pour la modale
+    $pStmt = $conn->prepare("SELECT photo_path FROM trip_photos WHERE trip_id = ?");
+    $pStmt->bind_param("i", $trip_id);
+    $pStmt->execute();
+    $pRes = $pStmt->get_result();
+    $photos = [];
+    while($pRow = $pRes->fetch_assoc()) { $photos[] = $pRow['photo_path']; }
+    
+    $row['extra_photos'] = $photos;
     $trips[] = $row;
 }
 
-header('Content-Type: application/json');
-echo json_encode([
-    'trips' => $trips,
-    'total' => $totalTrips,
-    'page' => $page,
-    'limit' => $limit
-]);
-
-$stmt->close();
-$conn->close();
-?>
+echo json_encode(['trips' => $trips, 'total' => $totalTrips]);
