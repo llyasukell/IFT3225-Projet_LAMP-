@@ -1,4 +1,8 @@
 <?php
+/**
+ * Menu après connexion
+ * Affiche le menu principal pour les utilisateurs connectés
+ */
 session_start();
 require_once "config.php";
 
@@ -42,7 +46,7 @@ require_once "header.php";
     <div class="overlay-banniere">
         <img class="image-principale" src="worldmap.png" alt="Carte du monde">
         <h2>Le monde à votre portée</h2>
-        <button class="btn-principal">Découvrir</button>
+        <a href="next.php" class="btn-principal">Découvrir</a>
     </div>
 </section>
 

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Page de profil de l'utilisateur.
+ * Permet de visualiser ses informations et de mettre à jour sa photo de profil.
+ */
 session_start();
 require_once "config.php";
 
@@ -25,57 +29,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['new_pic'])) {
     $chemin_complet = $dossier . $nom_fichier;
 
     if (move_uploaded_file($_FILES["new_pic"]["tmp_name"], $chemin_complet)) {
-        // Mise à jour du nom de l'image dans la base de données
+        // Mise à jour de la base de données
         $update = $conn->prepare("UPDATE users SET profile_pic = ? WHERE id = ?");
         $update->bind_param("si", $nom_fichier, $user_id);
         $update->execute();
         
         $message = "Photo mise à jour avec succès !";
-        $user['profile_pic'] = $nom_fichier; // Pour afficher la nouvelle photo de suite
+        $user['profile_pic'] = $nom_fichier; 
     }
 }
 
-// Déterminer quelle image afficher (la sienne ou une par défaut)
+// Déterminer l'image à afficher
 $photo_a_afficher = !empty($user['profile_pic']) ? "uploads/" . $user['profile_pic'] : "https://www.w3schools.com/howto/img_avatar.png";
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon Profil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - TravelBook</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="barre-navigation">
+    <header class="barre-navigation">
         <div class="logo">TravelBook</div>
-        <div class="menu-navigation">
-        <a href="next.php">Explore</a>
-        <a href="MenuApresCo.php">Menu</a>
-        <a href="PageCreationTuile.php">Créer</a>
-        <a href="MesVoyages.php">Mes Voyages</a>
-        
-        <a href="profil.php" style="display: inline-flex; align-items: center; gap: 8px;">
-            <img src="<?php echo $photo_a_afficher; ?>" alt="Profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid white;">
-            Mon Profil
-        </a>
-        <a href="logout.php">Déconnexion</a>
-        </div>
-    </div>
-
-    <div class="page-connexion">
-        <div class="tuile-creation" style="text-align: center;">
-            <h2>Profil de <?php echo htmlspecialchars($user['name']); ?></h2>
+        <nav class="menu-navigation">
+            <a href="next.php">Explore</a>
+            <a href="MenuApresCo.php">Menu</a>
+            <a href="PageCreationTuile.php">Créer</a>
+            <a href="MesVoyages.php">Mes Voyages</a>
             
-            <img src="<?php echo $photo_a_afficher; ?>" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:20px; border: 2px solid #007bff;">
+            <a href="profil.php" class="actif" style="display: inline-flex; align-items: center; gap: 8px;">
+                <img src="<?php echo $photo_a_afficher; ?>" alt="Miniature Profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid white;">
+                Mon Profil
+            </a>
+            <a href="logout.php">Déconnexion</a>
+        </nav>
+    </header>
 
-            <?php if($message) echo "<p style='color:green;'>$message</p>"; ?>
+    <main class="page-connexion">
+        <div class="tuile-creation" style="text-align: center;">
+            <h1>Profil de <?php echo htmlspecialchars($user['name']); ?></h1>
+            
+            <img src="<?php echo $photo_a_afficher; ?>" alt="Photo de profil de <?php echo htmlspecialchars($user['name']); ?>" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:20px; border: 2px solid #007bff;">
+
+            <?php if($message) echo "<p style='color:green; margin-bottom:15px;'>$message</p>"; ?>
 
             <form action="profil.php" method="post" enctype="multipart/form-data">
-                <input type="file" name="new_pic" accept="image/*" required>
-                <button type="submit" class="btn-principal" style="margin-top:10px;">Changer ma photo</button>
+                <label for="new_pic" style="display:block; margin-bottom:10px; cursor:pointer;">Choisir une nouvelle photo :</label>
+                <input type="file" id="new_pic" name="new_pic" accept="image/*" required>
+                
+                <button type="submit" class="btn-principal" style="margin-top:20px;">Changer ma photo</button>
             </form>
         </div>
-    </div>
+    </main>
 </body>
 </html>

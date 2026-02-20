@@ -1,4 +1,9 @@
 <?php
+/**
+ * Page de modification d'un voyage.
+ * Permet de mettre à jour le texte, d'ajouter de nouvelles photos ou de supprimer
+ * les photos secondaires existantes via des requêtes asynchrones (fetch).
+ */
 session_start();
 require_once "config.php";
 
@@ -9,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// ACTION : SUPPRIMER UNE PHOTO
+// ACTION : SUPPRIMER UNE PHOTO SECONDAIRE (AJAX)
 if (isset($_POST['action']) && $_POST['action'] === 'delete_photo') {
     $p_id = $_POST['photo_id'];
     $check = $conn->prepare("SELECT p.photo_path FROM trip_photos p JOIN trips t ON p.trip_id = t.id WHERE p.id = ? AND t.user_id = ?");
@@ -26,7 +31,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete_photo') {
     exit();
 }
 
-// ACTION : MODIFIER INFOS ET AJOUTER PHOTOS
+// ACTION : MODIFIER INFOS ET AJOUTER PHOTOS (AJAX)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['action'])) {
     $trip_id = $_POST['id'];
     $title = trim($_POST['title']);
@@ -54,21 +59,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['action'])) {
     exit(); 
 }
 
-$trip_id = $_GET['id']; 
+// CHARGEMENT INITIAL DES DONNÉES
+$trip_id = $_GET['id'] ?? 0; 
 $stmt = $conn->prepare("SELECT * FROM trips WHERE id=? AND user_id=?");
 $stmt->bind_param("ii", $trip_id, $user_id);
 $stmt->execute();
 $voyage = $stmt->get_result()->fetch_assoc();
 if (!$voyage) die("Accès refusé.");
 
-// Récupérer les photos actuelles
-$photos_res = $conn->query("SELECT * FROM trip_photos WHERE trip_id = $trip_id");
+$photos_res = $conn->query("SELECT * FROM trip_photos WHERE trip_id = " . (int)$trip_id);
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modifier le voyage - TravelBook</title>
   <link rel="stylesheet" href="style.css">
   <style>
     .galerie-edit { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
@@ -78,17 +84,20 @@ $photos_res = $conn->query("SELECT * FROM trip_photos WHERE trip_id = $trip_id")
   </style>
 </head>
 <body>
-  <div class="page-connexion">
+  <main class="page-connexion">
     <div class="tuile-creation">
-      <h2>Modifier le voyage</h2>
+      <h1>Modifier le voyage</h1>
       <form id="formModifier" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo $trip_id; ?>">
-        <label>Titre</label>
-        <input type="text" name="title" value="<?php echo htmlspecialchars($voyage['title']); ?>" required>
-        <label>Pays / Lieu</label>
-        <input type="text" name="location" value="<?php echo htmlspecialchars($voyage['location']); ?>" required>
-        <label>Région</label>
-        <select name="region">
+        
+        <label for="title">Titre</label>
+        <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($voyage['title']); ?>" required>
+        
+        <label for="location">Pays / Lieu</label>
+        <input type="text" id="location" name="location" value="<?php echo htmlspecialchars($voyage['location']); ?>" required>
+        
+        <label for="region">Région</label>
+        <select id="region" name="region">
             <option value="Europe" <?php if($voyage['region']=='Europe') echo 'selected'; ?>>Europe</option>
             <option value="Asie" <?php if($voyage['region']=='Asie') echo 'selected'; ?>>Asie</option>
             <option value="Amérique" <?php if($voyage['region']=='Amérique') echo 'selected'; ?>>Amérique</option>
@@ -99,19 +108,19 @@ $photos_res = $conn->query("SELECT * FROM trip_photos WHERE trip_id = $trip_id")
         <div class="galerie-edit">
             <?php while($p = $photos_res->fetch_assoc()): ?>
                 <div class="item-photo" id="photo-<?php echo $p['id']; ?>">
-                    <img src="uploads/<?php echo $p['photo_path']; ?>">
-                    <button type="button" class="btn-del" onclick="supprimerPhoto(<?php echo $p['id']; ?>)">X</button>
+                    <img src="uploads/<?php echo $p['photo_path']; ?>" alt="Photo du voyage">
+                    <button type="button" class="btn-del" onclick="supprimerPhoto(<?php echo $p['id']; ?>)" aria-label="Supprimer cette photo">X</button>
                 </div>
             <?php endwhile; ?>
         </div>
 
-        <label>Ajouter des photos (plusieurs possibles)</label>
-        <input type="file" name="trip_photos[]" accept="image/*" multiple>
+        <label for="trip_photos">Ajouter des photos (Plusieurs possibles)</label>
+        <input type="file" id="trip_photos" name="trip_photos[]" accept="image/*" multiple>
 
-        <button type="submit" style="margin-top: 15px; width: 100%;">Enregistrer</button>
+        <button type="submit" class="btn-principal" style="margin-top: 15px; width: 100%;">Enregistrer les modifications</button>
       </form>
     </div>
-  </div>
+  </main>
 
   <script>
     function supprimerPhoto(id) {
@@ -121,7 +130,10 @@ $photos_res = $conn->query("SELECT * FROM trip_photos WHERE trip_id = $trip_id")
         fd.append('photo_id', id);
         fetch('modifier.php', { method: 'POST', body: fd })
         .then(r => r.json()).then(data => {
-            if(data.status === 'success') document.getElementById('photo-'+id).remove();
+            if(data.status === 'success') {
+                const el = document.getElementById('photo-'+id);
+                if(el) el.remove();
+            }
         });
     }
 
@@ -129,8 +141,11 @@ $photos_res = $conn->query("SELECT * FROM trip_photos WHERE trip_id = $trip_id")
         e.preventDefault(); 
         fetch('modifier.php', { method: 'POST', body: new FormData(this) })
         .then(r => r.json()).then(data => {
-            if (data.status === 'success') { alert('Mis à jour !'); window.location.href = 'MesVoyages.php'; }
-        });
+            if (data.status === 'success') { 
+                alert('Voyage mis à jour avec succès !'); 
+                window.location.href = 'MesVoyages.php'; 
+            }
+        }).catch(err => console.error('Erreur:', err));
     });
   </script>
 </body>
