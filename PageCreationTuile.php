@@ -80,7 +80,7 @@ require_once "header.php";
         <label for="image">Image principale</label>
         <input type="file" id="image" name="image" accept="image/*" required>
 
-        <label for="trip_photos">Photos de voyage (Plusieurs possibles)</label>
+        <label for="trip_photos">Photos de voyage </label>
         <input type="file" id="trip_photos" name="trip_photos[]" accept="image/*" multiple>
 
         <button type="submit" class="btn-principal">Créer</button>
