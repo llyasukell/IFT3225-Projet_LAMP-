@@ -1,8 +1,9 @@
-
 <?php
+/**
+ * Page d'accueil
+ */
 session_start();
 
-# Redirige vers l'accueil si déjà connecté
 if (isset($_SESSION['user_id'])) {
     header("Location: MenuApresCo.php");
     exit();
@@ -13,28 +14,27 @@ if (isset($_SESSION['user_id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Exemple</title>
+  <title>TravelBook - Accueil</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header class="barre-navigation">
     <div class="logo">TravelBook</div>
-    <div class="menu-navigation">
+    <nav class="menu-navigation">
       <a class="actif" href="index.php">Accueil</a>
       <a href="apropos.php">À propos</a>
       <a href="connexion.php" class="btn-menu">Connexion</a>
       <a href="inscription.php" class="btn-menu">Inscription</a>
-    </div>
+    </nav>
   </header>
 
   <section class="banniere-principale">
     <div class="overlay-banniere">
-      <img class="image-principale" src="worldmap.png" alt="Carte du monde">
+      <img class="image-principale" src="worldmap.png" alt="Carte du monde TravelBook">
       <h2>Le monde à votre portée</h2>
-      <a href="inscription.php">
-        <button class="btn-principal">Découvrir</button>
-      </a>
+      
+      <a href="inscription.php" class="btn-principal">Découvrir</a>
     </div>
   </section>
 
@@ -42,7 +42,8 @@ if (isset($_SESSION['user_id'])) {
     <section class="tuiles">
       <h3>À la une</h3>
       <hr>
-      <div class="grille-tuiles" id="grille-tuiles"></div>
+      <div class="grille-tuiles" id="grille-tuiles">
+        </div>
     </section>
   </main>
 

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Page "Mes Voyages" de TravelBook.
+ * Affiche les voyages créés par l'utilisateur connecté, avec options de recherche, filtrage et tri. Permet également d'accéder à la création d'un nouveau voyage.
+ */
 session_start();
 require_once "config.php";
 
@@ -8,22 +12,20 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once "header.php";
-
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mes Voyages Partagés</title>
+  <title>Mes Voyages Partagés - TravelBook</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gris-clair">
 
   <header class="barre-navigation">
     <div class="logo">TravelBook</div>
-    <div class="menu-navigation">
+    <nav class="menu-navigation">
         <a href="next.php">Explore</a>
         <a href="MenuApresCo.php">Menu</a>
         <a href="PageCreationTuile.php">Créer</a>
@@ -35,7 +37,7 @@ require_once "header.php";
         </a>
 
         <a href="logout.php">Déconnexion</a>
-    </div>
+    </nav>
   </header>
 
   <main class="contenu-mes-voyages">
@@ -58,13 +60,10 @@ require_once "header.php";
       <a href="PageCreationTuile.php" class="btn-nouveau-voyage">NOUVEAU VOYAGE</a>
     </div>
 
-    <section class="grille-profil" id="grille-mes-voyages">
-      
-    </section>
+    <div class="grille-profil" id="grille-mes-voyages">
+      </div>
 
     <div class="pagination" id="pagination-mesvoyages"></div>
-    
-
   </main>
 
   <script src="tuiles.js"></script>

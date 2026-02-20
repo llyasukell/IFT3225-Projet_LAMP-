@@ -1,4 +1,8 @@
 <?php
+/**
+ * Page d'exploration
+ * Affiche les voyages créés par les utilisateurs, avec options de recherche, filtrage et tri.
+ */
 session_start();
 require_once "config.php";
 
