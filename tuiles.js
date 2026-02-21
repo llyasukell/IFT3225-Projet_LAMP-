@@ -1,3 +1,4 @@
+// limite de voyages par page pour la pagination
 const LIMIT = 15;
 let searchTimeout;
 

@@ -44,7 +44,7 @@ body {
 /* BANNIÈRE PRINCIPALE */
 .banniere-principale {
   height: 350px;
-  background: url("worldmap.jpg") center/cover no-repeat;
+  background: url("worldmap.jpg") center/cover no-repeat; /* Vérifie bien si c'est .jpg ou .png */
   position: relative;
 }
 
@@ -62,7 +62,6 @@ body {
 
 .image-principale {
   width: 300px;
-  opacity: 0.9;
 }
 
 .overlay-banniere h2 {
@@ -95,12 +94,6 @@ body {
 .tuiles h3 {
   font-size: 20px;
   margin-bottom: 5px;
-}
-
-.tuiles hr {
-  width: 80px;
-  border: 2px solid #999;
-  margin-bottom: 25px;
 }
 
 .grille-tuiles {
@@ -155,17 +148,16 @@ body {
   opacity: 0.80;
 }
 
-.nom-auteur {
-  position: relative; 
-  z-index: 2;        
-  font-size: 14px;
-  color: white;      
-  font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
-  margin: 5px 0;
+/* PAGES CONNEXION/INSCRIPTION & CRÉATION */
+/* Regroupement des styles de formulaires identiques */
+.box-connexion, .tuile-creation {
+  width: 380px;
+  background: white;
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 25px 25px 25px rgba(0,0,0,0.25);
 }
 
-/* PAGES CONNEXION/INSCRIPTION */
 .page-connexion {
   height: 100vh;
   background: url("worldmap.jpg") center/cover no-repeat;
@@ -174,34 +166,27 @@ body {
   align-items: center;
 }
 
-.box-connexion {
-  width: 380px;
-  background: white;
-  padding: 35px;
-  border-radius: 15px;
-  box-shadow: 25px 25px 25px rgba(0,0,0,0.25);
-}
-
-.box-connexion h1 {
+.box-connexion h1, .tuile-creation h2 {
   text-align: center;
   margin-bottom: 25px;
   font-size: 22px;
 }
 
-.box-connexion form {
+.box-connexion form, .tuile-creation form {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.box-connexion input {
+.box-connexion input, .tuile-creation input, 
+.tuile-creation select, .tuile-creation textarea {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 15px;
 }
 
-.box-connexion button {
+.box-connexion button, .tuile-creation button {
   margin-top: 10px;
   padding: 12px;
   background: #4a4a18;
@@ -212,7 +197,7 @@ body {
   font-size: 16px;
 }
 
-.box-connexion button:hover {
+.box-connexion button:hover, .tuile-creation button:hover {
   opacity: 0.80;
 }
 
@@ -230,51 +215,6 @@ body {
 
 .signup-text a:hover {
   text-decoration: underline;
-}
-
-/* PAGE CRÉATION TUILES */
-.tuile-creation {
-  width: 380px;
-  background: white;
-  padding: 35px;
-  border-radius: 15px;
-  box-shadow: 25px 25px 25px rgba(0,0,0,0.25);
-}
-
-.tuile-creation h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  font-size: 22px;
-}
-
-.tuile-creation form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.tuile-creation input,
-.tuile-creation select,
-.tuile-creation textarea {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-}
-
-.tuile-creation button {
-  margin-top: 10px;
-  padding: 12px;
-  background: #4a4a18;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.tuile-creation button:hover {
-  opacity: 0.80;
 }
 
 /* PAGE MES VOYAGE */
@@ -316,18 +256,6 @@ body {
   outline: none;
   margin-left: 10px;
   width: 100%;
-}
-
-.sort-container span {
-  font-size: 18px;
-  font-weight: bold;
-  color: #555;
-}
-
-.sort-highlight {
-  font-family: serif; 
-  font-size: 20px;
-  color: #333;
 }
 
 .btn-nouveau-voyage {
@@ -378,7 +306,7 @@ body {
 
 .img-voyage {
   width: 100%;
-  height: 100%;
+  height: 200px; /* Fixé pour éviter les déformations */
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
@@ -452,7 +380,7 @@ body {
 .likes {
   font-size: 12px;
   font-weight: bold;
-  color: white;       
+  color: white; 
   text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
 }
 
@@ -476,7 +404,7 @@ body {
   border-radius: 12px;
 }
 
-
+/* AUTEURS */
 .auteur-container {
   display: flex;
   align-items: center;
@@ -495,5 +423,9 @@ body {
 }
 
 .nom-auteur {
+  font-size: 14px;
+  color: white;      
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
   margin: 0 !important; 
 }

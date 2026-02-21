@@ -1,4 +1,8 @@
 <?php
+/**
+ * Page de traitement de la connexion et de l'inscription.
+ * Gère à la fois les requêtes de connexion et d'inscription en fonction des données POST reçues.
+ */
 
 session_start();
 require_once "config.php";
