@@ -1,4 +1,8 @@
 <?php
+/**
+ * Script de récupération des voyages de l'utilisateur.
+ * Ce script est appelé via AJAX depuis la page "mesvoyages.php" pour charger les voyages de l'utilisateur avec pagination, recherche et tri.
+ */
 session_start();
 require_once "config.php";
 
@@ -25,13 +29,13 @@ if ($search !== '') {
     $types .= "s";
 }
 
-// Compte
+# Compte total pour la pagination
 $countStmt = $conn->prepare("SELECT COUNT(*) as total FROM trips t" . $whereSql);
 $countStmt->bind_param($types, ...$params);
 $countStmt->execute();
 $totalTrips = (int)$countStmt->get_result()->fetch_assoc()['total'];
 
-// Tri
+# Tri
 $orderSql = " ORDER BY t.created_at DESC";
 if ($sort === 'old') $orderSql = " ORDER BY t.created_at ASC";
 if ($sort === 'popular') $orderSql = " ORDER BY like_count DESC";

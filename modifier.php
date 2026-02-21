@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// ACTION : SUPPRIMER UNE PHOTO SECONDAIRE (AJAX)
+# ACTION : SUPPRIMER PHOTO (AJAX)
 if (isset($_POST['action']) && $_POST['action'] === 'delete_photo') {
     $p_id = $_POST['photo_id'];
     $check = $conn->prepare("SELECT p.photo_path FROM trip_photos p JOIN trips t ON p.trip_id = t.id WHERE p.id = ? AND t.user_id = ?");
@@ -31,7 +31,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'delete_photo') {
     exit();
 }
 
-// ACTION : MODIFIER INFOS ET AJOUTER PHOTOS (AJAX)
+# ACTION : MISE À JOUR DU VOYAGE (AJAX)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['action'])) {
     $trip_id = $_POST['id'];
     $title = trim($_POST['title']);
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['action'])) {
     exit(); 
 }
 
-// CHARGEMENT INITIAL DES DONNÉES
+# AFFICHAGE DE LA PAGE
 $trip_id = $_GET['id'] ?? 0; 
 $stmt = $conn->prepare("SELECT * FROM trips WHERE id=? AND user_id=?");
 $stmt->bind_param("ii", $trip_id, $user_id);
@@ -121,7 +121,6 @@ $photos_res = $conn->query("SELECT * FROM trip_photos WHERE trip_id = " . (int)$
       </form>
     </div>
   </main>
-
   <script>
     function supprimerPhoto(id) {
         if(!confirm("Supprimer cette photo ?")) return;

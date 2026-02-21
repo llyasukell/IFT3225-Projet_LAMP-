@@ -1,6 +1,11 @@
 <?php
+/**
+ * Script de récupération des voyages publics.
+ * Ce script est appelé via AJAX depuis la page d'accueil pour charger les voyages publics avec pagination, recherche, filtrage par région et tri.
+ */
 require_once "config.php";
 
+# Récupérer les paramètres de la requête
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 15;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -30,7 +35,7 @@ if (!empty($whereClauses)) {
     $whereSql = " WHERE " . implode(" AND ", $whereClauses);
 }
 
-// Compte Total
+# Compte total pour la pagination
 $countSql = "SELECT COUNT(*) as total FROM trips t JOIN users u ON t.user_id = u.id" . $whereSql;
 $countStmt = $conn->prepare($countSql);
 if (!empty($params)) $countStmt->bind_param($types, ...$params);
@@ -38,12 +43,12 @@ $countStmt->execute();
 $totalRow = $countStmt->get_result()->fetch_assoc();
 $totalTrips = (int)$totalRow['total'];
 
-// Tri
+# Tri
 $orderSql = " ORDER BY t.created_at DESC";
 if ($sort === 'old') $orderSql = " ORDER BY t.created_at ASC";
 if ($sort === 'popular') $orderSql = " ORDER BY like_count DESC";
 
-// Requête principale
+# Requête principale pour récupérer les voyages
 $sql = "SELECT t.*, u.name as author_name, u.profile_pic as author_pic, 
         (SELECT COUNT(*) FROM likes WHERE trip_id = t.id) as like_count
         FROM trips t 

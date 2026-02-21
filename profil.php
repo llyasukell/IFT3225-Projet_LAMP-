@@ -14,13 +14,13 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $message = "";
 
-// 1. Récupérer les infos de l'utilisateur
+# Récupérer les informations de l'utilisateur pour afficher son nom et sa photo actuelle
 $stmt = $conn->prepare("SELECT name, profile_pic FROM users WHERE id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
 
-// 2. Traitement du téléchargement de la photo
+# Gérer la mise à jour de la photo de profil
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['new_pic'])) {
     $dossier = "uploads/";
     if(!is_dir($dossier)) mkdir($dossier, 0777, true);
@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['new_pic'])) {
     $chemin_complet = $dossier . $nom_fichier;
 
     if (move_uploaded_file($_FILES["new_pic"]["tmp_name"], $chemin_complet)) {
-        // Mise à jour de la base de données
         $update = $conn->prepare("UPDATE users SET profile_pic = ? WHERE id = ?");
         $update->bind_param("si", $nom_fichier, $user_id);
         $update->execute();
@@ -39,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['new_pic'])) {
     }
 }
 
-// Déterminer l'image à afficher
+# Déterminer la photo à afficher (celle de l'utilisateur ou une image par défaut)
 $photo_a_afficher = !empty($user['profile_pic']) ? "uploads/" . $user['profile_pic'] : "https://www.w3schools.com/howto/img_avatar.png";
 ?>
 <!DOCTYPE html>

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Script de création d'un voyage.
+ * Ce script traite le formulaire de création de voyage, gère le téléchargement de l'image principale et des photos supplémentaires, et insère les données dans la base de données. 
+ * En cas d'erreur, il redirige l'utilisateur vers la page de création avec les messages d'erreur et les données pré-remplies.
+ */
 session_start();
 require_once "config.php";
 
